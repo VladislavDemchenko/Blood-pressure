@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.PulseMeasurementApp" parent="Base.Theme.PulseMeasurementApp"/>
+    <style name="Theme.PulseMeasurementApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.PulseMeasurementApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="Theme.PulseMeasurementApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 </resources>

@@ -7,21 +7,19 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.pulsemeasurementapp.model.BloodPressureData
 
-class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 16) {
 
     companion object {
-        private const val DATABASE_VERSION = 1
         private const val DATABASE_NAME = "MyDatabase.db"
-        private const val TABLE_NAME = "bloodPressure"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val createTableQuery = "CREATE TABLE $TABLE_NAME (id INTEGER PRIMARY KEY, systolic INTEGER, diastolic INTEGER, pulse INTEGER)"
+        val createTableQuery = "CREATE TABLE bloodPressure (id INTEGER PRIMARY KEY, systolic INTEGER, diastolic INTEGER, pulse INTEGER)"
         db.execSQL(createTableQuery)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db.execSQL("DROP TABLE IF EXISTS bloodPressure")
         onCreate(db)
     }
 
@@ -32,22 +30,31 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         contentValues.put("pulse", value.pulse)
 
         val db = this.writableDatabase
-        db.insert(TABLE_NAME, null, contentValues)
+        db.insert("bloodPressure", null, contentValues)
 
         db.close()
     }
-//
-//    @SuppressLint("Range")
-//    fun getSelectedValue(): Int {
+
+//    fun getAllBloodPressure(): List<BloodPressureData> {
+//        val bloodPressureList = mutableListOf<BloodPressureData>()
 //        val db = this.readableDatabase
 //        val cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
-//        var selectedValue = 0
+//
 //        if (cursor.moveToFirst()) {
-//            selectedValue = cursor.getInt(cursor.getColumnIndex(COLUMN_VALUE))
+//            do {
+//                val systolic = cursor.getInt(cursor.getColumnIndex("systolic"))
+//                val diastolic = cursor.getInt(cursor.getColumnIndex("diastolic"))
+//                val pulse = cursor.getInt(cursor.getColumnIndex(COLUMN_PULSE))
+//
+//                val bloodPressureData = BloodPressureData(systolic, diastolic, pulse)
+//                bloodPressureList.add(bloodPressureData)
+//            } while (cursor.moveToNext())
 //        }
+//
 //        cursor.close()
 //        db.close()
-//        return selectedValue
+//
+//        return bloodPressureList
 //    }
 }
 
